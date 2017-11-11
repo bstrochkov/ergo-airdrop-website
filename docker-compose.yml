@@ -1,0 +1,26 @@
+version: '2'
+services:
+  web:
+    image: "dragontek/octobercms"
+    depends_on:
+     - mysql
+     - memcached
+    ports:
+     - "8080:80"
+    volumes:
+     - "./public:/var/www/html"
+    environment:
+     - OCTOBER_DB_DRIVER=mysql
+     - OCTOBER_DB_NAME=ergo-airdrop
+     - OCTOBER_DB_PASSWORD=root
+  mysql:
+    image: "mysql"
+    environment:
+     - MYSQL_ROOT_PASSWORD=root
+     - MYSQL_USER=ergo-airdrop
+     - MYSQL_PASSWORD=AdVFdkwsd6qk
+     - MYSQL_DATABASE=ergo-airdrop
+    ports:
+     - "13306:3306"
+  memcached:
+    image: "memcached"
