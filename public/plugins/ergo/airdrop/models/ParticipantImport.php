@@ -4,6 +4,8 @@ namespace Ergo\Airdrop\Models;
 
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Ergo\Airdrop\Models\Participant;
 
 class ParticipantImport extends \Backend\Models\ImportModel
 {
@@ -14,7 +16,7 @@ class ParticipantImport extends \Backend\Models\ImportModel
 
     public function importData($results, $sessionKey = null)
     {
-        Log::info('Import Start');
+        Db::table((new Participant)->getTable())->truncate();
         foreach ($results as $row => $data) {
             try {
                 $participant = new Participant;

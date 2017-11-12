@@ -3,31 +3,29 @@
 use Model;
 
 /**
- * Participant Model
+ * winner Model
  */
-class Participant extends Model
+class Winner extends Model
 {
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'ergo_airdrop_participants';
+    public $table = 'ergo_airdrop_winners';
 
     /**
      * @var array Guarded fields
      */
-    protected $guarded = ['id'];
+    protected $guarded = ['*'];
 
     /**
      * @var array Fillable fields
      */
-    protected $fillable = ['name', 'address', 'balance'];
+    protected $fillable = [];
 
     /**
      * @var array Relations
      */
-    public $hasOne = [
-        'winned_coins' => 'Ergo\Airdrop\Models\Winner',
-    ];
+    public $hasOne = [];
     public $hasMany = [];
     public $belongsTo = [];
     public $belongsToMany = [];

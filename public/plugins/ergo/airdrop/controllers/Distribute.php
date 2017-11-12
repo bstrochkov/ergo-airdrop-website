@@ -4,7 +4,8 @@ use BackendMenu;
 use Backend\Classes\Controller;
 use Ergo\Airdrop\Models\Participant;
 use Ergo\Airdrop\Models\Settings;
-use October\Rain\Network\Http;
+use Ergo\Airdrop\Models\Winner;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Distribute Back-end Controller
@@ -34,13 +35,59 @@ class Distribute extends Controller
         }
         if ($partic_data) {
             $client = new \GuzzleHttp\Client();
+            ksort($partic_data);
             $res = $client->request('POST', $this->getDistributionServiceUrl(),
                 [
                     'json' => $partic_data,
                     'http_errors' => false,
                 ])
             ;
-            $this->vars['result_body'] = $res->getBody()->getContents();
+            if ($res->getStatusCode() === 200) {
+                $body_contents = $res->getBody()->getContents();
+                $winners = json_decode($body_contents, true);
+                if (is_array($winners)) {
+                    $winner_addresses = array_keys($winners);
+                    $winner_participants = (array)DB::table((new Participant)->getTable())
+                        ->select('id', 'address')
+                        ->whereIn('address', $winner_addresses)
+                        ->get();
+
+                    $winners_insert_data = [];
+                    foreach ($winner_participants as $win_part) {
+                        $win_part = (array)$win_part;
+                        $winners_insert_data[] = [
+                            'participant_id' => $win_part['id'],
+                            'coin_count' => $winners[$win_part['address']]
+                        ];
+                    }
+
+                    $winner_table = (new Winner())->getTable();
+                    if ($winners_insert_data) {
+                        $result = false;
+                         Db::transaction(
+                            function () use ($winner_table, $winners_insert_data, &$result) {
+                                Db::table($winner_table)->truncate();
+                                $result = Db::table($winner_table)->insert($winners_insert_data);
+                            }
+                        );
+                        $this->vars['status'] =
+                            "Result ". ($result ? 'OK' : 'ERROR') . ". ".
+                            "Found ".count($winners_insert_data).' winners!';
+                        return;
+                    }
+                    $this->vars['status'] =
+                        "Result ERROR ".
+                        "Empty winners_insert_data";
+                    return;
+                }
+                $this->vars['status'] =
+                    "Result ERROR ".
+                    "Winners is not array: ".var_export($winners, true). " Body: ".var_export($body_contents, true);
+                return;
+            }
+            $this->vars['status'] =
+                "Result ERROR ".
+                "HTTP status code: ".var_export($res->getStatusCode(), true);
         }
 
     }

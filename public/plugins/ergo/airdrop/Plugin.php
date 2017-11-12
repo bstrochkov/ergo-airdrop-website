@@ -19,7 +19,7 @@ class Plugin extends PluginBase
             'name'        => 'airdrop',
             'description' => 'No description provided yet...',
             'author'      => 'ergo',
-            'icon'        => 'icon-random'
+            'icon'        => 'icon-bolt'
         ];
     }
 
@@ -50,10 +50,8 @@ class Plugin extends PluginBase
      */
     public function registerComponents()
     {
-        return []; // Remove this line to activate
-
         return [
-            'Ergo\Airdrop\Components\MyComponent' => 'myComponent',
+            'Ergo\Airdrop\Components\Participants' => 'Participants',
         ];
     }
 

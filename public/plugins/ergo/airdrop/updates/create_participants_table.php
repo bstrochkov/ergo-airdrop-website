@@ -15,6 +15,8 @@ class CreateParticipantsTable extends Migration
             $table->string('address');
             $table->integer('balance');
             $table->timestamps();
+
+            $table->unique('address');
         });
     }
 
