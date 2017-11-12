@@ -1,0 +1,10 @@
+fields:
+    blockno:
+      label: Block Number
+      type: number
+    winners:
+      label: Winners Count
+      type: number
+    coins:
+      label: Coins Count
+      type: number

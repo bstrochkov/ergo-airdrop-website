@@ -118,4 +118,18 @@ class Plugin extends PluginBase
             ],
         ];
     }
+
+    public function registerSettings()
+    {
+        return [
+            'settings' => [
+                'label'       => 'Ergo Airdrop Settings',
+                'description' => 'Manage airdrop settings.',
+                'category'    => 'Ergo',
+                'icon'        => 'icon-bolt',
+                'class'       => 'Ergo\Airdrop\Models\Settings',
+                'order'       => 0,
+            ]
+        ];
+    }
 }

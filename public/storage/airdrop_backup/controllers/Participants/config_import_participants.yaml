@@ -1,4 +1,0 @@
-import:
-    title: Import participants
-    modelClass: Ergo\Airdrop\Models\ParticipantImport
-    list: $/ergo/airdrop/models/participant/columns.yaml
