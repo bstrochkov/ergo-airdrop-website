@@ -1,0 +1,17 @@
+fields:
+    id:
+        disabled: true
+
+    name:
+        label: Participant Name
+        description: Participant Name
+
+    address:
+        label: Bitcoin Address
+        description: Participant's Bitcoin Address
+        type: datepicker
+
+    balance:
+      label: Bitcoin Balance
+      description: Participant's Bitcoin Balance
+      type: number

@@ -1,0 +1,4 @@
+columns:
+  name: Name
+  address: Bitcoin Address
+  balance: Bitcoin Balance

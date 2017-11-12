@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Participant
+
+# Model Form Field configuration
+form: $/ergo/airdrop/models/participant/fields.yaml
+
+# Model Class name
+modelClass: Ergo\Airdrop\Models\Participant
+
+# Default redirect location
+defaultRedirect: ergo/airdrop/participants
+
+# Create page
+create:
+    title: Create Participant
+    redirect: ergo/airdrop/participants/update/:id
+    redirectClose: ergo/airdrop/participants
+
+# Update page
+update:
+    title: Edit Participant
+    redirect: ergo/airdrop/participants
+    redirectClose: ergo/airdrop/participants
+
+# Preview page
+preview:
+    title: Preview Participant

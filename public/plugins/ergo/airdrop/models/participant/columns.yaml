@@ -1,0 +1,7 @@
+columns:
+  id:
+    label: ID
+    searchable: true
+  name: Name
+  address: Bitcoin Address
+  balance: Bitcoin Balance
